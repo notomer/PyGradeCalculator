@@ -79,18 +79,26 @@ class GradeCalculatorApp:
             data = [{'assignment': entry_assignment.get(), 'grade': entry_grade.get(), 'weight': entry_weight.get()} for entry_assignment, entry_grade, entry_weight, _, _ in self.rows]
             with open(self.file_path, 'w') as f:
                 json.dump(data, f, indent=4)
-
+                
     def load_data(self):
         data_file = filedialog.askopenfilename(filetypes=[("JSON files", "*.json")])
         if data_file:
             self.file_path = data_file
             with open(data_file, 'r') as f:
                 data = json.load(f)
+            
+            # Clear existing rows before loading new data
+            for _, _, _, _, row_frame in self.rows:
+                row_frame.destroy()
+            self.rows = []  # Clear the list of rows
+            
+            # Load new data into rows
             for entry in data:
                 self.add_row()
                 self.rows[-1][0].insert(0, entry['assignment'])
                 self.rows[-1][1].insert(0, entry['grade'])
                 self.rows[-1][2].insert(0, entry['weight'])
+
 
     def calculate_grades(self):
         total_grade = 0
