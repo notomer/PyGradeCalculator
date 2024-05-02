@@ -1,0 +1,3 @@
+([('GradeCalculator',
+   '/Users/omer/Local Repo/PyGradeCalculator/dist/GradeCalculator',
+   'EXECUTABLE')],)
